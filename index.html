@@ -34,12 +34,12 @@
             width: 100%;
             position: relative;
             display: flex;
-            align-items: center; /* Centraliza verticalmente */
-            justify-content: flex-start; /* Alinha na ESQUERDA */
+            align-items: center; 
+            justify-content: flex-start;
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('fachada_dark.jpg'); /* FOTO DA VISTA/MAR */
+            background-image: url('fachada_dark.jpg'); 
             background-size: cover; background-position: center;
             z-index: 1;
         }
@@ -75,7 +75,7 @@
             font-size: 0.9rem; color: #FFF; opacity: 0.8; letter-spacing: 1px; display: block;
         }
 
-        /* --- 2. SPECS BAR (Números) --- */
+        /* --- 2. SPECS BAR (5 ITENS) --- */
         .specs-bar {
             background: var(--card-bg);
             padding: 30px 40px;
@@ -84,14 +84,14 @@
             position: relative; z-index: 20; margin-top: -60px;
             width: 90%; max-width: 1100px; margin-left: auto; margin-right: auto;
             border: 1px solid #333;
-            flex-wrap: wrap; /* Permite quebrar linha se precisar */
+            flex-wrap: wrap; 
         }
-        .spec-item { text-align: center; flex: 1; min-width: 100px; }
+        .spec-item { text-align: center; flex: 1; min-width: 80px; }
         .spec-value { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #FFF; display: block; margin-bottom: 5px; }
         .spec-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
         .divider { width: 1px; background: #333; height: 40px; align-self: center; }
 
-        /* --- 3. DESTAQUES (TEXTO) --- */
+        /* --- 3. DESTAQUES --- */
         .features-section {
             padding: 80px 20px;
             max-width: 1000px; margin: 0 auto;
@@ -109,7 +109,7 @@
         .feature-box h4 { font-family: 'Cinzel'; font-size: 1.2rem; margin-bottom: 10px; color: #FFF; }
         .feature-box p { color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; }
 
-        /* --- 4. CARROSSEL POR CÔMODO (Storytelling) --- */
+        /* --- 4. CARROSSEL ZIG-ZAG (MOBILE E DESKTOP) --- */
         .room-section { margin-bottom: 100px; position: relative; margin-top: 80px; }
         
         .room-title-sticky {
@@ -140,53 +140,57 @@
         .room-info-card h3 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--gold); }
         .room-info-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 25px; }
         
-        /* CORREÇÃO DA SETA */
+        /* Seta Padrão */
         .swipe-hint { font-size: 0.7rem; color: #FFF; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; }
-        /* Seta Padrão (Aponta para Direita) */
         .swipe-hint::after { content: ' →'; } 
         
-        /* Fotos do Cômodo */
+        /* Fotos */
         .photo-card {
             min-width: 600px; height: 450px; scroll-snap-align: center;
             overflow: hidden; border: 1px solid #333; position: relative;
         }
-        .photo-card::after { /* Sombra interna na foto */
+        .photo-card::after { 
             content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 20%);
         }
         .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s; }
         .photo-card:hover img { transform: scale(1.05); }
 
-        /* --- LÓGICA DESKTOP (ZIG-ZAG) --- */
-        @media (min-width: 769px) {
-            /* Seção Ímpar (Master Suite) */
-            section:nth-of-type(odd) .room-title-sticky {
-                text-align: right;
-                border-left: none; border-right: 3px solid var(--gold);
-                margin-left: 0; margin-right: 5%; padding-left: 0; padding-right: 20px;
-            }
-            section:nth-of-type(odd) .room-track { direction: rtl; } /* Scroll começa na direita */
-            section:nth-of-type(odd) .room-info-card { 
-                direction: ltr; text-align: left; 
-                margin-right: 0; margin-left: -40px; /* Ajusta sobreposição */
-            }
-            section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; } /* Seta aponta para esquerda */
-            section:nth-of-type(odd) .photo-card { direction: ltr; }
+        /* --- LÓGICA DE INVERSÃO (RTL) - APLICADA A TODOS (INCLUSIVE MOBILE) --- */
+        /* Isso garante que na section impar, o texto esteja na direita e seja o primeiro item visto */
+        
+        section:nth-of-type(odd) .room-title-sticky {
+            text-align: right;
+            border-left: none;
+            border-right: 3px solid var(--gold);
+            margin-left: 0; margin-right: 5%;
+            padding-left: 0; padding-right: 20px;
+        }
+        
+        section:nth-of-type(odd) .room-track {
+            direction: rtl;  /* Começa o scroll da direita (onde está o texto) */
         }
 
-        /* --- MARCA D'ÁGUA DE PROTEÇÃO --- */
+        section:nth-of-type(odd) .room-info-card {
+            direction: ltr; /* Volta o texto para esquerda */
+            text-align: left;
+            margin-right: 0;
+            margin-left: -40px; 
+        }
+
+        section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; } /* Seta aponta para a esquerda */
+        
+        section:nth-of-type(odd) .photo-card {
+            direction: ltr;
+        }
+
+        /* --- MARCA D'ÁGUA --- */
         .watermark-layer {
-            position: fixed;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            z-index: 9999; /* Fica acima de tudo */
-            pointer-events: none; /* Permite clicar nos botões através dela */
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            z-index: 9999; pointer-events: none;
             background-image: url('logo.png'); 
-            background-repeat: repeat;
-            background-size: 300px; 
-            opacity: 0.04; 
-            transform: rotate(-30deg);
-            mix-blend-mode: exclusion;
+            background-repeat: repeat; background-size: 300px; 
+            opacity: 0.04; transform: rotate(-30deg); mix-blend-mode: exclusion;
         }
 
         /* --- FOOTER --- */
@@ -214,7 +218,7 @@
 
         @keyframes fadeRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* --- MOBILE (CORREÇÕES IMPORTANTES) --- */
+        /* --- MOBILE --- */
         @media (max-width: 768px) {
             .hero-title { font-size: 3rem; }
             
@@ -223,24 +227,19 @@
                 display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
                 width: 95%; margin-top: -30px; padding: 20px; 
             }
-            .divider { display: none; } /* Esconde as linhas divisórias no mobile */
+            /* O ultimo item ocupa as 2 colunas para ficar centralizado */
+            .spec-item:last-child { grid-column: span 2; }
+            .divider { display: none; }
 
             .features-grid { grid-template-columns: 1fr; gap: 30px; }
             
-            /* RESET COMPLETO DA INVERSÃO NO MOBILE */
-            /* Garante que Texto SEMPRE apareça primeiro (esquerda) e seta → */
-            section:nth-of-type(odd) .room-title-sticky {
-                text-align: left; border-right: none; border-left: 3px solid var(--gold);
-                margin-right: 0; margin-left: 5%; padding-right: 0; padding-left: 20px;
-            }
-            section:nth-of-type(odd) .room-track { direction: ltr; } /* Scroll normal LTR */
-            section:nth-of-type(odd) .room-info-card { margin-left: 0; margin-right: 10px; }
-            section:nth-of-type(odd) .swipe-hint::after { content: ' →'; } /* Seta sempre direita no mobile */
-            
-            /* Tamanho dos Cards no Mobile */
+            /* Ajuste Zig-Zag no Mobile */
             .room-info-card { min-width: 88vw; margin-right: 15px; height: auto; padding: 30px; }
+            
+            /* Na versão invertida (RTL), ajusta a margem para não cortar */
+            section:nth-of-type(odd) .room-info-card { margin-left: 15px; margin-right: 0; }
+            
             .photo-card { min-width: 88vw; height: 300px; }
-
             .watermark-layer { background-size: 150px; } 
 
             /* CTA Mobile */
@@ -255,7 +254,7 @@
 </head>
 <body>
 
-    <!-- MARCA D'ÁGUA (Remova ao vender) -->
+    <!-- MARCA D'ÁGUA -->
     <div class="watermark-layer"></div>
 
     <!-- HERO -->
@@ -343,11 +342,11 @@
         </div>
     </section>
 
-    <!-- CÔMODO 2: SUÍTE (INVERTIDO DESKTOP / NORMAL MOBILE) -->
+    <!-- CÔMODO 2: SUÍTE (INVERTIDO ZIG-ZAG) -->
     <section class="room-section">
         <div class="room-title-sticky">Master Suite</div>
         <div class="room-track">
-            <!-- Card de Texto -->
+            <!-- Card de Texto (Começa visivel na direita devido ao RTL) -->
             <div class="room-info-card">
                 <h3>Refúgio<br>Íntimo</h3>
                 <p>Piso em madeira laminada para máximo conforto, persianas automatizadas e banheira de hidromassagem. Um santuário privativo dentro de casa.</p>
