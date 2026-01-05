@@ -159,6 +159,7 @@
 
         /* --- LÓGICA DESKTOP (ZIG-ZAG) --- */
         @media (min-width: 769px) {
+            /* Seção Ímpar (Master Suite) */
             section:nth-of-type(odd) .room-title-sticky {
                 text-align: right;
                 border-left: none; border-right: 3px solid var(--gold);
@@ -167,7 +168,7 @@
             section:nth-of-type(odd) .room-track { direction: rtl; } /* Scroll começa na direita */
             section:nth-of-type(odd) .room-info-card { 
                 direction: ltr; text-align: left; 
-                margin-right: 0; margin-left: -40px; 
+                margin-right: 0; margin-left: -40px; /* Ajusta sobreposição */
             }
             section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; } /* Seta aponta para esquerda */
             section:nth-of-type(odd) .photo-card { direction: ltr; }
@@ -227,7 +228,7 @@
             .features-grid { grid-template-columns: 1fr; gap: 30px; }
             
             /* RESET COMPLETO DA INVERSÃO NO MOBILE */
-            /* Isso garante que Texto SEMPRE apareça primeiro (esquerda) */
+            /* Garante que Texto SEMPRE apareça primeiro (esquerda) e seta → */
             section:nth-of-type(odd) .room-title-sticky {
                 text-align: left; border-right: none; border-left: 3px solid var(--gold);
                 margin-right: 0; margin-left: 5%; padding-right: 0; padding-left: 20px;
