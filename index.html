@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sognare Residenziale | Exclusive Listing</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* TEMA DARK PREMIUM (Noite/Cidade) */
+            --bg: #0F0F0F;
+            --card-bg: #1A1A1A;
+            --text: #F5F5F5;
+            --text-muted: #A0A0A0;
+            --gold: #D4AF37; 
+            --gold-dark: #AA8540;
+            --overlay: linear-gradient(90deg, #000 15%, rgba(0,0,0,0.6) 60%, transparent 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Manrope', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* --- 1. HERO LATERAL --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center; /* Centraliza verticalmente */
+            justify-content: flex-start; /* Alinha na ESQUERDA */
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('fachada_dark.jpg'); /* FOTO DA VISTA/MAR */
+            background-size: cover; background-position: center;
+            z-index: 1;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay);
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative; z-index: 10;
+            margin-left: 5%; 
+            max-width: 650px; 
+            padding: 20px;
+            text-align: left;
+            animation: fadeRight 1.5s ease;
+        }
+        
+        .hero-tag { 
+            letter-spacing: 4px; text-transform: uppercase; color: var(--gold); 
+            font-size: 0.8rem; margin-bottom: 10px; display: block; font-weight: 700;
+        }
+        .hero-title { 
+            font-family: 'Cinzel', serif; font-size: 4rem; line-height: 0.9; margin-bottom: 25px; 
+            color: #FFF; text-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .hero-price { 
+            border: 1px solid var(--gold); color: var(--gold); 
+            padding: 12px 35px; font-size: 1.3rem; display: inline-block; 
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+        }
+
+        /* --- 2. SPECS BAR (Números) --- */
+        .specs-bar {
+            background: var(--card-bg);
+            padding: 40px;
+            display: flex; justify-content: center; gap: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative; z-index: 20; margin-top: -60px;
+            width: 90%; max-width: 1000px; margin-left: auto; margin-right: auto;
+            border: 1px solid #333;
+        }
+        .spec-item { text-align: center; }
+        .spec-value { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #FFF; display: block; }
+        .spec-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); }
+
+        /* --- 3. DESTAQUES (TEXTO) --- */
+        .features-section {
+            padding: 80px 20px;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-title { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+        .section-desc { max-width: 600px; margin: 0 auto; line-height: 1.8; color: var(--text-muted); font-size: 0.95rem; }
+
+        .features-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        .feature-box {
+            border-left: 2px solid var(--gold); padding-left: 20px;
+        }
+        .feature-box h4 { font-family: 'Cinzel'; font-size: 1.2rem; margin-bottom: 10px; color: #FFF; }
+        .feature-box p { color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; }
+
+        /* --- 4. CARROSSEL POR CÔMODO (Storytelling) --- */
+        .room-section { margin-bottom: 100px; position: relative; margin-top: 80px; }
+        
+        .room-title-sticky {
+            padding: 0 5%; margin-bottom: 25px;
+            font-family: 'Cinzel', serif; font-size: 2rem; color: #FFF;
+            border-left: 3px solid var(--gold); margin-left: 5%;
+            padding-left: 20px;
+        }
+
+        .room-track {
+            display: flex; gap: 20px; overflow-x: auto;
+            padding: 0 5% 30px; 
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .room-track::-webkit-scrollbar { display: none; }
+
+        /* Card de Texto */
+        .room-info-card {
+            min-width: 350px; scroll-snap-align: start;
+            background: rgba(26, 26, 26, 0.95); 
+            border: 1px solid #333;
+            padding: 40px; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+            margin-right: -40px; z-index: 5; /* Sobrepõe levemente */
+            height: 450px;
+        }
+        
+        .room-info-card h3 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--gold); }
+        .room-info-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 25px; }
+        
+        /* CORREÇÃO DA SETA */
+        .swipe-hint { font-size: 0.7rem; color: #FFF; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; }
+        /* Seta Padrão (Aponta para Direita) */
+        .swipe-hint::after { content: ' →'; } 
+        
+        /* Fotos do Cômodo */
+        .photo-card {
+            min-width: 600px; height: 450px; scroll-snap-align: center;
+            overflow: hidden; border: 1px solid #333; position: relative;
+        }
+        .photo-card::after { /* Sombra interna na foto */
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 20%);
+        }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s; }
+        .photo-card:hover img { transform: scale(1.05); }
+
+        /* --- LÓGICA DE INVERSÃO (RTL) para Layout Zig-Zag --- */
+        section:nth-of-type(odd) .room-title-sticky {
+            text-align: right;
+            border-left: none;
+            border-right: 3px solid var(--gold);
+            margin-left: 0; margin-right: 5%;
+            padding-left: 0; padding-right: 20px;
+        }
+        
+        section:nth-of-type(odd) .room-track {
+            direction: rtl;  /* Começa o scroll da direita */
+        }
+
+        section:nth-of-type(odd) .room-info-card {
+            direction: ltr; /* Volta o texto ao normal */
+            text-align: left;
+            margin-right: 0;
+            margin-left: -40px; 
+        }
+
+        /* CORREÇÃO DA SETA INVERTIDA */
+        section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; }
+        
+        section:nth-of-type(odd) .photo-card {
+            direction: ltr;
+        }
+
+        /* --- MARCA D'ÁGUA DE PROTEÇÃO --- */
+        .watermark-layer {
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            z-index: 9999; /* Fica acima de tudo */
+            pointer-events: none; /* Permite clicar nos botões através dela */
+            background-image: url('logo.png'); 
+            background-repeat: repeat;
+            background-size: 300px; 
+            opacity: 0.04; 
+            transform: rotate(-30deg);
+            mix-blend-mode: exclusion;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background: #050505; color: #FFF; text-align: center;
+            padding: 80px 20px 120px; margin-top: 50px; border-top: 1px solid #222;
+        }
+        .broker-img {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 2px solid var(--gold); margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        /* --- CTA FLUTUANTE --- */
+        .cta-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: linear-gradient(45deg, var(--gold), var(--gold-dark));
+            color: #000; padding: 18px 40px; 
+            border-radius: 50px; 
+            text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);
+            z-index: 100; transition: transform 0.3s;
+        }
+        .cta-float:hover { transform: translateY(-5px); box-shadow: 0 0 50px rgba(197, 160, 89, 0.4); }
+
+        @keyframes fadeRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            .specs-bar { flex-wrap: wrap; gap: 20px; width: 95%; margin-top: -30px; padding: 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 30px; }
+            .room-info-card { min-width: 85vw; margin-right: 10px; height: auto; padding: 30px; }
+            section:nth-of-type(odd) .room-info-card { margin-left: 10px; margin-right: 0; }
+            .photo-card { min-width: 85vw; height: 300px; }
+            .watermark-layer { background-size: 150px; } 
+
+            /* --- CORREÇÃO DO BOTÃO NO MOBILE --- */
+            .cta-float {
+                left: 50%; transform: translateX(-50%); width: 90%; 
+                bottom: 20px; padding: 14px 0; font-size: 0.9rem; 
+                text-align: center; right: auto;
+            }
+            .cta-float:hover { transform: translateX(-50%); }
+            body { padding-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MARCA D'ÁGUA (Remova ao vender) -->
+    <div class="watermark-layer"></div>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-tag">Frente Mar | Meia Praia</span>
+            <h1 class="hero-title">Sognare<br>Residenziale</h1>
+            <div class="hero-price">R$ 9.000.000</div>
+        </div>
+    </header>
+
+    <!-- SPECS -->
+    <div class="specs-bar">
+        <div class="spec-item">
+            <span class="spec-value">198m²</span>
+            <span class="spec-label">Privativos</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-value">4</span>
+            <span class="spec-label">Suítes</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-value">4</span>
+            <span class="spec-label">Vagas</span>
+        </div>
+    </div>
+
+    <!-- DESTAQUES -->
+    <section class="features-section">
+        <div class="section-header">
+            <h2 class="section-title">Exclusividade Frente Mar</h2>
+            <p class="section-desc">
+                Um ícone em Itapema com 4.000m² de lazer. Único empreendimento na orla com pista de boliche profissional e acabamentos em mármore Grego e Italiano.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-box">
+                <h4>Lazer Inédito</h4>
+                <p>O único frente mar com Pista de Boliche e Cancha de Bocha privativas.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Acabamento Sierra</h4>
+                <p>Apartamento 100% decorado com móveis Sierra e portas laqueadas.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Área Gourmet</h4>
+                <p>Churrasqueira a carvão em um living integrado de 90m².</p>
+            </div>
+            <div class="feature-box">
+                <h4>Tecnologia</h4>
+                <p>Usina fotovoltaica, persianas automatizadas e biometria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CÔMODO 1: LIVING -->
+    <section class="room-section">
+        <div class="room-title-sticky">Living Integrado</div>
+        <div class="room-track">
+            <!-- Card de Texto -->
+            <div class="room-info-card">
+                <h3>Amplitude &<br>Sofisticação</h3>
+                <p>Com 90m² de área social, o living oferece vista panorâmica para o mar. Decorado com móveis de luxo e piso porcelanato 1x1, perfeito para recepções.</p>
+                <div class="swipe-hint">DESLIZE PARA VER</div>
+            </div>
+            <!-- Fotos -->
+            <div class="photo-card"><img src="sala1.jpg" alt="Living Sofá"></div>
+            <div class="photo-card"><img src="sala2.jpg" alt="Living Jantar"></div>
+        </div>
+    </section>
+
+    <!-- CÔMODO 2: SUÍTE (INVERTIDO) -->
+    <section class="room-section">
+        <div class="room-title-sticky">Master Suite</div>
+        <div class="room-track">
+            <!-- Card de Texto -->
+            <div class="room-info-card">
+                <h3>Refúgio<br>Íntimo</h3>
+                <p>Piso em madeira laminada para máximo conforto, persianas automatizadas e banheira de hidromassagem. Um santuário privativo dentro de casa.</p>
+                <div class="swipe-hint">DESLIZE PARA VER</div>
+            </div>
+            <!-- Fotos -->
+            <div class="photo-card"><img src="quarto1.jpg" alt="Suíte Principal"></div>
+            <div class="photo-card"><img src="quarto2.jpg" alt="Detalhes Suíte"></div>
+        </div>
+    </section>
+
+    <!-- CÔMODO 3: LAZER -->
+    <section class="room-section">
+        <div class="room-title-sticky">Club & Spa</div>
+        <div class="room-track">
+            <!-- Card de Texto -->
+            <div class="room-info-card">
+                <h3>4.000m² de<br>Privilégio</h3>
+                <p>Uma estrutura de resort particular. Divirta-se na pista de boliche exclusiva ou relaxe nas piscinas aquecidas e no SPA. Tudo entregue climatizado.</p>
+                <div class="swipe-hint">DESLIZE PARA VER</div>
+            </div>
+            <!-- Fotos -->
+            <div class="photo-card"><img src="lazer2.jpg" alt="Pista de Boliche"></div>
+            <div class="photo-card"><img src="lazer1.jpg" alt="Piscina Externa"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER COM CORRETOR -->
+    <footer class="footer">
+        <!-- FOTO DA TAISA -->
+        <img src="logo_taisa.jpg" class="broker-img" alt="Taisa F. Haveroth">
+        <h3 style="font-family:'Cinzel'; margin-bottom:5px; color:#FFF;">Taisa F. Haveroth</h3>
+        <p>Especialista em Alto Padrão • CRECI 2828-5</p>
+        <br><br>
+        
+        <div style="opacity: 0.9; margin-top: 20px;">
+            <p style="font-size:0.6rem; color:#666; margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase;">
+                Powered by
+            </p>
+            <!-- LOGO MOGUL PARTNERS -->
+            <img src="logo.png" alt="Mogul Partners" style="width: 160px; height: auto; display: block; margin: 0 auto;">
+        </div>
+    </footer>
+
+    <!-- BOTÃO DE AÇÃO -->
+    <a href="https://wa.me/5547988388704" class="cta-float">
+        Agendar Visita VIP 🔑
+    </a>
+
+</body>
+</html>
