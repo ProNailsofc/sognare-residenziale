@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sognare Residenziale | Exclusive Listing</title>
     
+    <title>Sognare Residenziale | Exclusive Listing</title>
+    <meta property="og:title" content="Sognare Residenziale - Experiência Frente Mar">
+    <meta property="og:description" content="Luxo e exclusividade em Itapema. Unidade decorada Sierra por R$ 9.3M.">
+    <meta property="og:image" content="sala1.jpg"> <meta property="og:type" content="website">
+    
+    <link rel="icon" href="https://fav.farm/🦅">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* TEMA DARK PREMIUM (Noite/Cidade) */
             --bg: #0F0F0F;
             --card-bg: #1A1A1A;
             --text: #F5F5F5;
@@ -71,11 +75,8 @@
             background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
             margin-bottom: 10px;
         }
-        .hero-condo {
-            font-size: 0.9rem; color: #FFF; opacity: 0.8; letter-spacing: 1px; display: block;
-        }
 
-        /* --- 2. SPECS BAR (5 ITENS) --- */
+        /* --- 2. SPECS BAR (6 ITENS AGORA) --- */
         .specs-bar {
             background: var(--card-bg);
             padding: 30px 40px;
@@ -109,7 +110,7 @@
         .feature-box h4 { font-family: 'Cinzel'; font-size: 1.2rem; margin-bottom: 10px; color: #FFF; }
         .feature-box p { color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; }
 
-        /* --- 4. CARROSSEL ZIG-ZAG (MOBILE E DESKTOP) --- */
+        /* --- 4. CARROSSEL ZIG-ZAG --- */
         .room-section { margin-bottom: 100px; position: relative; margin-top: 80px; }
         
         .room-title-sticky {
@@ -126,25 +127,22 @@
         }
         .room-track::-webkit-scrollbar { display: none; }
 
-        /* Card de Texto */
         .room-info-card {
             min-width: 350px; scroll-snap-align: start;
             background: rgba(26, 26, 26, 0.95); 
             border: 1px solid #333;
             padding: 40px; display: flex; flex-direction: column; justify-content: center;
             box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
-            margin-right: -40px; z-index: 5; /* Sobrepõe levemente */
+            margin-right: -40px; z-index: 5;
             height: 450px;
         }
         
         .room-info-card h3 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--gold); }
         .room-info-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 25px; }
         
-        /* Seta Padrão */
         .swipe-hint { font-size: 0.7rem; color: #FFF; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; }
         .swipe-hint::after { content: ' →'; } 
         
-        /* Fotos */
         .photo-card {
             min-width: 600px; height: 450px; scroll-snap-align: center;
             overflow: hidden; border: 1px solid #333; position: relative;
@@ -153,38 +151,18 @@
             content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 20%);
         }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s; }
-        .photo-card:hover img { transform: scale(1.05); }
-
-        /* --- LÓGICA DE INVERSÃO (RTL) - APLICADA A TODOS (INCLUSIVE MOBILE) --- */
-        /* Isso garante que na section impar, o texto esteja na direita e seja o primeiro item visto */
         
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease-in-out; }
+        .photo-card:hover img { transform: scale(1.08); }
+
         section:nth-of-type(odd) .room-title-sticky {
-            text-align: right;
-            border-left: none;
-            border-right: 3px solid var(--gold);
-            margin-left: 0; margin-right: 5%;
-            padding-left: 0; padding-right: 20px;
+            text-align: right; border-left: none; border-right: 3px solid var(--gold); margin-left: 0; margin-right: 5%; padding-left: 0; padding-right: 20px;
         }
-        
-        section:nth-of-type(odd) .room-track {
-            direction: rtl;  /* Começa o scroll da direita (onde está o texto) */
-        }
+        section:nth-of-type(odd) .room-track { direction: rtl; }
+        section:nth-of-type(odd) .room-info-card { direction: ltr; text-align: left; margin-right: 0; margin-left: -40px; }
+        section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; }
+        section:nth-of-type(odd) .photo-card { direction: ltr; }
 
-        section:nth-of-type(odd) .room-info-card {
-            direction: ltr; /* Volta o texto para esquerda */
-            text-align: left;
-            margin-right: 0;
-            margin-left: -40px; 
-        }
-
-        section:nth-of-type(odd) .swipe-hint::after { content: ' ←'; } /* Seta aponta para a esquerda */
-        
-        section:nth-of-type(odd) .photo-card {
-            direction: ltr;
-        }
-
-        /* --- MARCA D'ÁGUA --- */
         .watermark-layer {
             position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
             z-index: 9999; pointer-events: none;
@@ -193,7 +171,6 @@
             opacity: 0.04; transform: rotate(-30deg); mix-blend-mode: exclusion;
         }
 
-        /* --- FOOTER --- */
         .footer {
             background: #050505; color: #FFF; text-align: center;
             padding: 80px 20px 120px; margin-top: 50px; border-top: 1px solid #222;
@@ -204,7 +181,6 @@
             object-fit: cover;
         }
 
-        /* --- CTA FLUTUANTE --- */
         .cta-float {
             position: fixed; bottom: 30px; right: 30px;
             background: linear-gradient(45deg, var(--gold), var(--gold-dark));
@@ -218,46 +194,23 @@
 
         @keyframes fadeRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* --- MOBILE --- */
         @media (max-width: 768px) {
             .hero-title { font-size: 3rem; }
-            
-            /* Specs Bar: Grade de 2 colunas para caber 5 itens */
-            .specs-bar { 
-                display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
-                width: 95%; margin-top: -30px; padding: 20px; 
-            }
-            /* O ultimo item ocupa as 2 colunas para ficar centralizado */
-            .spec-item:last-child { grid-column: span 2; }
+            .specs-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 95%; margin-top: -30px; padding: 20px; }
             .divider { display: none; }
-
             .features-grid { grid-template-columns: 1fr; gap: 30px; }
-            
-            /* Ajuste Zig-Zag no Mobile */
             .room-info-card { min-width: 88vw; margin-right: 15px; height: auto; padding: 30px; }
-            
-            /* Na versão invertida (RTL), ajusta a margem para não cortar */
             section:nth-of-type(odd) .room-info-card { margin-left: 15px; margin-right: 0; }
-            
             .photo-card { min-width: 88vw; height: 300px; }
-            .watermark-layer { background-size: 150px; } 
-
-            /* CTA Mobile */
-            .cta-float {
-                left: 50%; transform: translateX(-50%); width: 90%; 
-                bottom: 20px; padding: 14px 0; font-size: 0.9rem; 
-                text-align: center; right: auto;
-            }
+            .cta-float { left: 50%; transform: translateX(-50%); width: 90%; bottom: 20px; padding: 14px 0; font-size: 0.9rem; text-align: center; right: auto; }
             body { padding-bottom: 40px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- MARCA D'ÁGUA -->
     <div class="watermark-layer"></div>
 
-    <!-- HERO -->
     <header class="hero">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
@@ -265,20 +218,13 @@
             <span class="hero-tag">Meia Praia | Itapema</span>
             <h1 class="hero-title">Sognare<br>Residenziale</h1>
             <div class="hero-price">R$ 9.300.000</div>
-            <span class="hero-condo">Condomínio: R$ 2.000,00/mês</span>
         </div>
     </header>
 
-    <!-- SPECS DETALHADAS -->
     <div class="specs-bar">
         <div class="spec-item">
             <span class="spec-value">198m²</span>
             <span class="spec-label">Privativos</span>
-        </div>
-        <div class="divider"></div>
-        <div class="spec-item">
-            <span class="spec-value">368m²</span>
-            <span class="spec-label">Área Total</span>
         </div>
         <div class="divider"></div>
         <div class="spec-item">
@@ -292,12 +238,16 @@
         </div>
         <div class="divider"></div>
         <div class="spec-item">
+            <span class="spec-value">R$ 2.000</span>
+            <span class="spec-label">Condomínio</span>
+        </div>
+        <div class="divider"></div>
+        <div class="spec-item">
             <span class="spec-value">4.000m²</span>
-            <span class="spec-label">Terreno Lazer</span>
+            <span class="spec-label">Lazer Resort</span>
         </div>
     </div>
 
-    <!-- DESTAQUES -->
     <section class="features-section">
         <div class="section-header">
             <h2 class="section-title">Exclusividade Frente Mar</h2>
@@ -326,57 +276,46 @@
         </div>
     </section>
 
-    <!-- CÔMODO 1: LIVING -->
     <section class="room-section">
         <div class="room-title-sticky">Living Integrado</div>
         <div class="room-track">
-            <!-- Card de Texto -->
             <div class="room-info-card">
                 <h3>Amplitude &<br>Sofisticação</h3>
                 <p>Com 90m² de área social, o living oferece vista panorâmica para o mar. Decorado com móveis de luxo e piso porcelanato 1x1, perfeito para recepções.</p>
                 <div class="swipe-hint">DESLIZE PARA VER</div>
             </div>
-            <!-- Fotos -->
             <div class="photo-card"><img src="sala1.jpg" alt="Living Sofá"></div>
             <div class="photo-card"><img src="sala2.jpg" alt="Living Jantar"></div>
         </div>
     </section>
 
-    <!-- CÔMODO 2: SUÍTE (INVERTIDO ZIG-ZAG) -->
     <section class="room-section">
         <div class="room-title-sticky">Master Suite</div>
         <div class="room-track">
-            <!-- Card de Texto (Começa visivel na direita devido ao RTL) -->
             <div class="room-info-card">
                 <h3>Refúgio<br>Íntimo</h3>
                 <p>Piso em madeira laminada para máximo conforto, persianas automatizadas e banheira de hidromassagem. Um santuário privativo dentro de casa.</p>
                 <div class="swipe-hint">DESLIZE PARA VER</div>
             </div>
-            <!-- Fotos -->
             <div class="photo-card"><img src="quarto1.jpg" alt="Suíte Principal"></div>
             <div class="photo-card"><img src="quarto2.jpg" alt="Detalhes Suíte"></div>
         </div>
     </section>
 
-    <!-- CÔMODO 3: LAZER -->
     <section class="room-section">
         <div class="room-title-sticky">Club & Spa</div>
         <div class="room-track">
-            <!-- Card de Texto -->
             <div class="room-info-card">
                 <h3>4.000m² de<br>Privilégio</h3>
                 <p>Uma estrutura de resort particular. Divirta-se na pista de boliche exclusiva ou relaxe nas piscinas aquecidas e no SPA. Tudo entregue climatizado.</p>
                 <div class="swipe-hint">DESLIZE PARA VER</div>
             </div>
-            <!-- Fotos -->
             <div class="photo-card"><img src="lazer2.jpg" alt="Pista de Boliche"></div>
             <div class="photo-card"><img src="lazer1.jpg" alt="Piscina Externa"></div>
         </div>
     </section>
 
-    <!-- FOOTER COM CORRETOR -->
     <footer class="footer">
-        <!-- FOTO DA TAISA -->
         <img src="logo_taisa.jpg" class="broker-img" alt="Taisa F. Haveroth">
         <h3 style="font-family:'Cinzel'; margin-bottom:5px; color:#FFF;">Taisa F. Haveroth</h3>
         <p>Especialista em Alto Padrão • CRECI 2828-5</p>
@@ -384,14 +323,13 @@
         
         <div style="opacity: 0.9; margin-top: 20px;">
             <p style="font-size:0.6rem; color:#666; margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase;">
-                Powered by
+                Tecnologia de Vendas Exclusiva
             </p>
-            <!-- LOGO MOGUL PARTNERS -->
             <img src="logo.png" alt="Mogul Partners" style="width: 160px; height: auto; display: block; margin: 0 auto;">
+            <p style="font-size:0.5rem; color:#444; margin-top: 10px; letter-spacing: 1px;">MOGUL PARTNERS 🦅 - PROIBIDA A REPRODUÇÃO DE ATIVOS.</p>
         </div>
     </footer>
 
-    <!-- BOTÃO DE AÇÃO -->
     <a href="https://wa.me/5547988388704" class="cta-float">
         Agendar Visita VIP 🔑
     </a>
